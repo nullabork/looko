@@ -1,13 +1,13 @@
 import { Model } from './Model';
 
-interface IWorkspace {
+interface IWorkspaceProps {
     id? : string;
 }
 
 export class Workspace extends Model{
     public id: string;
 
-    constructor({id} : IWorkspace){
+    constructor({id} : IWorkspaceProps){
         super();
         this.id = id || Workspace.GenerateID();
     }
