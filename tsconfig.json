@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "outDir": "./public/js/",
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "target": "es5",
+        "moduleResolution": "node",
+        "baseUrl": "src",
+        "typeRoots": [
+          "node_modules/@types",
+          "types"
+        ],
+        "paths": {
+          "@Models/*": ["app/models/*"],
+          "@Interfaces/*": ["app/interfaces/*"],
+          "@Containers/*": ["app/containers/*"],
+          "@Types/*": ["app/types/*"],
+          "@Store/*": ["app/store/*"],
+          "@Sass/*": ["app/sass/*"],
+          "@Config/*": ["app/config/*"],
+          "@Components/*": ["app/components/*"],
+        }
+    },
+    "include": [
+      "./**/**/*"
+    ]
+  }
