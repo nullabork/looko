@@ -1,4 +1,4 @@
-# findo - WIP
+# Looko - WIP
 The Other half of fetcho
 
 prob gonna need node 10+
@@ -15,3 +15,5 @@ npm start
 ```
 npm run build
 ```
+
+
