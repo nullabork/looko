@@ -1,13 +1,16 @@
 const alias = require('./aliases.config.js'),
     path = require('path'),
     webpack = require('webpack'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+    ExtractTextPlugin = require("extract-text-webpack-plugin"),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
         app: ['./src/app/App.tsx', 'webpack-hot-middleware/client'],
         vendor: ['react', 'react-dom']
     },
+    mode: 'development',
     output: {
         path: path.resolve(__dirname, 'public'),
         filename: 'js/[name].bundle.js',
@@ -24,11 +27,30 @@ module.exports = {
                 test: /\.(ts|tsx)$/,
                 loader: 'ts-loader'
             },
+            {
+                test: /\.scss$/,
+                  use: [{
+                    loader: "style-loader"
+                  }, {
+                    loader: "css-loader" 
+                  }, {
+                    loader: "sass-loader"
+                  }]
+            },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'app', 'index.html') }),
+        new CopyWebpackPlugin([
+            { from: './src/static' }
+        ]),
         new webpack.HotModuleReplacementPlugin()
     ],
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        dns: 'empty',
+        tls: 'empty'
+    }
 }

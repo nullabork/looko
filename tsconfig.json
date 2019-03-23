@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "jsx": "react",
         "module": "commonjs",
         "noImplicitAny": true,
@@ -12,7 +13,7 @@
         "moduleResolution": "node",
         "baseUrl": "src",
         "typeRoots": [
-          "node_modules/@types",
+          "node_modules/@types/",
           "types"
         ],
         "paths": {

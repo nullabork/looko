@@ -2,7 +2,7 @@ import {Workspace} from '@Models/Workspace';
 import { History } from 'history';
 
 interface IDashboardProps{
-    workspace? : string,
+    account? : string,
     history? : History
 }
 

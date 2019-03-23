@@ -1,47 +1,103 @@
 import * as React from 'react';
 import IDashboardProps from './IDashboardProps';
-import { Workspace } from '@Models/Workspace';
+import { AccessKey, Account, FetchoAPI,IResult  } from '@Models/index';
 import { 
-   WorkspaceContextProvider,
-   WorkspaceContextInterface
-} from '@Context/WorkspaceContext';
+   AccountContextProvider,
+   AccountContextInterface
+} from '@Context/AccountContext';
+
 
 import { DashboardView } from './DashboardView';
 
 export class Dashboard extends React.Component<IDashboardProps, {}> {
 
-   public ws: Workspace;
-   public state: WorkspaceContextInterface;
+   public acc: Account;
+   public state: AccountContextInterface;
 
    constructor(props?: IDashboardProps){
       super(props);
+     
 
       this.state = {
-         workspace : new Workspace({id : props.workspace})
+         set: (callBack:{(state:AccountContextInterface): void;}) => {
+            callBack(this.state);
+            this.setState(this.state);
+         },
+         account : new Account(),
+         active : null,
+         activeResult : null
       };
 
-      if(!this.props.workspace) {
-         this.props.history.push(`/Dashboard/${this.ws.id}`)
+
+      if(this.props.account) {
+         this.state.account.Name = this.props.account;
       }
+
+      this.state.account.loadAccount(() => {
+         // let accessKeys = this.state.account.AccessKeys;
+         // let active = null;
+         // if( accessKeys && accessKeys.length ) {
+         //    active = accessKeys[0];
+         // }
+
+         this.setState({
+            account :  this.state.account
+         })
+
+         if(!this.props.account) {
+            this.props.history.push(`/Dashboard/${this.state.account.Name}`)
+         }
+
+      });
+   }
+   
+
+   handleSelectAccessKey(active: AccessKey) {
+      this.setState({
+         active
+      });
+
+
+      active.ResultSet.next(() => {
+         this.setState({
+            active
+         });
+      });
    }
 
-   handleClick() {
-      console.log('what');
-      this.state.workspace.id = "balls";
-
+   onResultSelect(row : IResult){
       this.setState({
-         workspace : {
-            id : "balls"
-         }
-      })
+         activeResult : row
+      });
+   }
+
+   onNewAccessKey () {
+
+      // this.state.account.loadAccount(() => {
+      //    this.setState({
+      //       account :  this.state.account
+      //    })
+      // });
+
+      let ak = new AccessKey();
+      ak.loadAccessKey(this.state.account, (ak) => {
+         this.state.account.addAccessKey(ak);
+         this.setState({
+            account :  this.state.account
+         })
+      });
+     
    }
 
    render() {
       
       return (
-         <WorkspaceContextProvider value={this.state}>
-           <DashboardView onClick={ () => this.handleClick }/>
-         </WorkspaceContextProvider>
+         <AccountContextProvider value={this.state}>
+            <DashboardView 
+               onNewAccessKey={ () => this.onNewAccessKey() }
+               handleSelectAccessKey={ (ak : AccessKey) => { this.handleSelectAccessKey(ak)}}
+               onResultSelect={(result: IResult) => { this.onResultSelect(result)}} />
+         </AccountContextProvider>
       )
    }
 }

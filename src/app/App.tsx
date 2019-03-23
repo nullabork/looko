@@ -7,8 +7,8 @@ ReactDOM.render(
 
     <Router basename={'/'}>
         <div>
-            <Route exact path="/dashboard/:workspace" component={(props :any) => <Dashboard workspace={props.match.params.workspace} {...props}/>} />
-            <Route exact path="/dashboard" component={(props :any) => <Dashboard {...props}/> } />
+            <Route exact path="/dashboard/:account" component={(props :any) => <Dashboard account={props.match.params.account} {...props}/>} />
+            <Route exact path="/dashboard" component={(props :any) => <Dashboard  account="" {...props}/> } />
         </div>
     </Router>,
 
