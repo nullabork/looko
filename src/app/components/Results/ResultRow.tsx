@@ -12,10 +12,6 @@ export interface IResultProps {
 }
 
 export const ResultRow = (props: IResultProps) => (
-   // <div className="p-2">
-   //    <div className="">{ props.result.Title }</div>
-   //    <div className="">{ props.result.Description }</div>
-   // </divIResult
    
    <div className={`border-bottom mt-2 pb-2 ${props.selectedWorkspace?'border-top border-primary bg-light':''}`} onClick={() => props.onSelect(props.result)}>
       <div className="">
