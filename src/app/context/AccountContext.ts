@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Account, AccessKey, IResult} from '@Models/index';
+import { Account, AccessKey, IResult, Types} from '@Models/index';
 
 export interface AccountContextInterface {
-  account: Account,
-  set: {(callback:{(state: AccountContextInterface): void;}): void;},
-  active?: AccessKey,
-  activeResult : IResult
+  account: Account;
+  set: {(callback:{(state: AccountContextInterface): void;}): void;};
+  selectedWorkspace?: AccessKey;
+  selectedResult? : IResult;
+  detailsView : Types;
 }
 
 const context = React.createContext<AccountContextInterface | null>(null);
 
 export const AccountContextProvider = context.Provider;
-  
 export const AccountContextConsumer = context.Consumer;

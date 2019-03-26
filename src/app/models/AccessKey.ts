@@ -15,6 +15,7 @@ export interface IAccessKeyProps {
     IsWellknown? : boolean;
     Permissions? : number;
     IsActive? : boolean;
+    Workspace?: Workspace; //for making requests with
 }
 
 
@@ -49,6 +50,13 @@ export class AccessKey extends Model {
             accessKey.IsWellknown = props.IsWellknown;
             accessKey.Permissions = props.Permissions;
             accessKey.IsActive = props.IsActive;
+
+            let ws = props.Workspace;
+            if(ws) {
+                accessKey.Workspace = new Workspace(ws);
+            };
+
+
         }
     }
 

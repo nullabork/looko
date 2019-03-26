@@ -1,0 +1,46 @@
+@import '~@Sass/_vars.scss';
+
+.lk-worspaces {
+  background-image: linear-gradient($color-primary-1, $color-primary-3);
+  padding-top:100px;
+
+  .lk-workspace-row--underline {
+    width:0;
+    height:0;
+    border-bottom:0;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .lk-workspace-row {
+    font-size: 0.8em;
+    padding: 8px 16px;
+    color: $color-text-light;
+
+    &:nth-child(even) {
+      background: $color-highlight-white;
+    }
+
+    &--active{
+      padding: 16px 16px;
+      border-bottom: 1px solid #96c1dc;
+      border-top: 1px solid #121111;
+      background: #ffffff !important;
+      color: #292929;
+
+      .lk-workspace-row--underline {
+        width:50%;
+        border-bottom:2px solid $color-primary-3;
+      }
+
+      .lk-icon {
+        display: inline-block;
+        height: 0;
+        margin-top: -25px;
+        vertical-align: middle;
+        margin-right: 5px;
+        width: 24px;
+      }
+    }   
+  }
+}
+

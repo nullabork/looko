@@ -1,4 +1,5 @@
-import { AccessKey, Model } from './index';
+import { AccessKey } from './AccessKey';
+import { Model } from './Model';
 
 interface IWorkspace {
     [key:string]: any; // Add index signature
@@ -13,6 +14,7 @@ export interface IWorkspaceProps {
     IsActive: boolean;
     IsWellknown: boolean;
     ResultCount: number;
+    [propName: string]: any;
 }
 export class Workspace extends Model {
     public id: string;
@@ -24,6 +26,7 @@ export class Workspace extends Model {
     public IsActive: boolean;
     public IsWellknown: boolean;
     public ResultCount: number;
+    [propName: string]: any;
 
     public AccessKeys : Array<AccessKey>;
 

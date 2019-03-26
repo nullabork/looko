@@ -3,11 +3,17 @@ import * as React from 'react';
 
 interface IIconProps {
    name : string;
+   className? : string;
+   onClick? : { () : void  };
 }
 
 
 export const Icon = (props: IIconProps) => (
-       <svg
+   <span className={[props.className, "lk-icon"].join(' ')} onClick={ () => {
+      console.log('whatup');
+      props.onClick && props.onClick()
+   }}>
+      <svg
          width="24"
          height="24"
          fill="none"
@@ -19,4 +25,5 @@ export const Icon = (props: IIconProps) => (
          <use xlinkHref={`/icons/feather-sprite.svg#${props.name}`} />
 
       </svg>
+   </span>
 );

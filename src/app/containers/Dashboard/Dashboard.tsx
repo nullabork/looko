@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IDashboardProps from './IDashboardProps';
-import { AccessKey, Account, FetchoAPI,IResult  } from '@Models/index';
+import { AccessKey, Account, FetchoAPI,IResult, Types  } from '@Models/index';
 import { 
    AccountContextProvider,
    AccountContextInterface
@@ -24,8 +24,9 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
             this.setState(this.state);
          },
          account : new Account(),
-         active : null,
-         activeResult : null
+         selectedWorkspace : null,
+         selectedResult : null,
+         detailsView : Types.NULL
       };
 
 
@@ -34,12 +35,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
       }
 
       this.state.account.loadAccount(() => {
-         // let accessKeys = this.state.account.AccessKeys;
-         // let active = null;
-         // if( accessKeys && accessKeys.length ) {
-         //    active = accessKeys[0];
-         // }
-
          this.setState({
             account :  this.state.account
          })
@@ -47,38 +42,37 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
          if(!this.props.account) {
             this.props.history.push(`/Dashboard/${this.state.account.Name}`)
          }
-
       });
    }
    
 
-   handleSelectAccessKey(active: AccessKey) {
+   handleSelectAccessKey(selectedWorkspace: AccessKey) {
       this.setState({
-         active
+         selectedWorkspace
       });
 
 
-      active.ResultSet.next(() => {
+      selectedWorkspace.ResultSet.next(() => {
          this.setState({
-            active
+            selectedWorkspace
          });
       });
    }
 
    onResultSelect(row : IResult){
       this.setState({
-         activeResult : row
+         selectedResult : row,
+         detailsView : Types.RESULT
+      });
+   }
+
+   onWorkspaceConfig(){
+      this.setState({
+         detailsView : Types.WORKSPACE
       });
    }
 
    onNewAccessKey () {
-
-      // this.state.account.loadAccount(() => {
-      //    this.setState({
-      //       account :  this.state.account
-      //    })
-      // });
-
       let ak = new AccessKey();
       ak.loadAccessKey(this.state.account, (ak) => {
          this.state.account.addAccessKey(ak);
@@ -96,7 +90,8 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
             <DashboardView 
                onNewAccessKey={ () => this.onNewAccessKey() }
                handleSelectAccessKey={ (ak : AccessKey) => { this.handleSelectAccessKey(ak)}}
-               onResultSelect={(result: IResult) => { this.onResultSelect(result)}} />
+               onResultSelect={(result: IResult) => { this.onResultSelect(result)}}
+               onWorkspaceConfig={() => { this.onWorkspaceConfig() }} />
          </AccountContextProvider>
       )
    }

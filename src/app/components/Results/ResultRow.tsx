@@ -2,12 +2,13 @@ import React, { Component, ReactNode } from 'react';
 import { string } from 'prop-types';
 import domain from 'getdomain';
 import { IResult } from '@Models/ResultSet';
+import { Icon } from '@Components/Icon';
 
 
 export interface IResultProps {
    result: IResult;
    onSelect: {(result:IResult) : void};
-   active:boolean;
+   selectedWorkspace: boolean;
 }
 
 export const ResultRow = (props: IResultProps) => (
@@ -16,7 +17,7 @@ export const ResultRow = (props: IResultProps) => (
    //    <div className="">{ props.result.Description }</div>
    // </divIResult
    
-   <div className={`border-bottom mt-2 pb-2 ${props.active?'border-top border-primary bg-light':''}`} onClick={() => props.onSelect(props.result)}>
+   <div className={`border-bottom mt-2 pb-2 ${props.selectedWorkspace?'border-top border-primary bg-light':''}`} onClick={() => props.onSelect(props.result)}>
       <div className="">
          
          <div className="text-truncate text-primary">
