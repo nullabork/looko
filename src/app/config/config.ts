@@ -6,11 +6,11 @@ export interface IConfig {
 
 let envs = {
   "development" :  {
-    "api" : "https://115.70.110.212:39541/api/v1"
+    "api" : "https://api.webdiggo.nullabork.dev/api/v1"
   },
 
   "production" : {
-    "api" : "https://115.70.110.212:39541/api/v1"
+    "api" : "https://api.webdiggo.nullabork.dev/api/v1"
   }
 }
 
