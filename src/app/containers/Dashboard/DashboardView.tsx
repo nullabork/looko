@@ -51,6 +51,7 @@ export const DashboardView = (props: DashboardViewProps) => (
                       {s.selectedWorkspace.Name}
                       <Icon name='settings' onClick={ props.onWorkspaceConfig }/>
                     </h2>
+                    
                     <div className='overflow-auto p-2'>
                       <Results>
 
