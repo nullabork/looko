@@ -10,7 +10,7 @@ export interface IConfig {
 
 let envs = {
   "development" :  {
-    "api" : "https://115.70.110.212:39541/api/v1",
+    "api" : "https://api.webdiggo.nullabork.dev/api/v1",
     "pager" : {
       "count" : 20,
       "offset" : 0
@@ -18,7 +18,7 @@ let envs = {
   },
 
   "production" : {
-    "api" : "https://115.70.110.212:39541/api/v1",
+    "api" : "https://api.webdiggo.nullabork.dev/api/v1",
     "pager" : {
       "count" : 20,
       "offset" : 0
