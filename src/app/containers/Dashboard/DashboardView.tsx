@@ -26,6 +26,7 @@ interface DashboardViewProps {
   onNewAccessKey? : {(): void;};
   onResultSelect? : {(result:IResult): void;};
   onWorkspaceConfig? : {(): void;};
+  wsChangeProperty : {(name :string, value : any) : void}
 }
 
 export const DashboardView = (props: DashboardViewProps) => (
@@ -75,7 +76,13 @@ export const DashboardView = (props: DashboardViewProps) => (
                 <div className=''>
                   
                   { s.detailsView == Types.RESULT ? <ResultDetails result={s.selectedResult} /> : null }
-                  { s.detailsView == Types.WORKSPACE ? <WorkspaceDetails workspace={s.selectedWorkspace} /> : null }
+                  {
+                     s.detailsView == Types.WORKSPACE ? (
+                      <WorkspaceDetails
+                        wsChangeProperty={props.wsChangeProperty}
+                        workspace={s.selectedWorkspace} />
+                    ) : null 
+                  }
                 </div>
               </div>
 

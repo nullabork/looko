@@ -13,10 +13,15 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
 
    public acc: Account;
    public state: AccountContextInterface;
+   public saveQuery : any;
+   public wsPatchData : any;
 
    constructor(props?: IDashboardProps){
       super(props);
      
+      this.wsPatchData={
+
+      };
 
       this.state = {
          set: (callBack:{(state:AccountContextInterface): void;}) => {
@@ -51,12 +56,30 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
          selectedWorkspace
       });
 
-
       selectedWorkspace.ResultSet.next(() => {
          this.setState({
             selectedWorkspace
          });
       });
+   }
+
+   handleWSPropertyChange(name:string,value:any){
+      if(this.state.selectedWorkspace){
+         this.state.selectedWorkspace.Workspace[name] = value;
+         this.wsPatchData[name] = value;
+         this.setState(this.state);
+
+         clearTimeout(this.saveQuery);
+         this.saveQuery = setTimeout(() => {
+
+            this.state.selectedWorkspace.PatchWorkspace(this.wsPatchData,() => {
+               console.log('updated');
+            });
+
+            this.wsPatchData = {};
+         }, 1000);
+         
+      }
    }
 
    onResultSelect(row : IResult){
@@ -68,7 +91,7 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
 
    onWorkspaceConfig(){
       this.setState({
-         detailsView : Types.WORKSPACE
+         detailsView : Types.WORKSPACE 
       });
    }
 
@@ -91,7 +114,8 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
                onNewAccessKey={ () => this.onNewAccessKey() }
                handleSelectAccessKey={ (ak : AccessKey) => { this.handleSelectAccessKey(ak)}}
                onResultSelect={(result: IResult) => { this.onResultSelect(result)}}
-               onWorkspaceConfig={() => { this.onWorkspaceConfig() }} />
+               onWorkspaceConfig={() => { this.onWorkspaceConfig() }}
+               wsChangeProperty={(name:string,value:any) => { this.handleWSPropertyChange(name, value)}} />
          </AccountContextProvider>
       )
    }

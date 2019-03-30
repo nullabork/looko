@@ -11,7 +11,7 @@ interface IWorkspaceRowProps {
 export const WorkspaceRow = (props: IWorkspaceRowProps) => (
    <div className={["lk-workspace-row", props.isActive ? "lk-workspace-row--active" : ""].join(' ')} onClick={() => props.onSelect(props.AccessKey) }>
       {
-         props.AccessKey.Name
+         props.AccessKey.Workspace.Name
       }
       <div className="lk-workspace-row--underline"></div>
    </div>

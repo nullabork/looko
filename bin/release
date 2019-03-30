@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if (( "$#" != 1 ))
+then
+    echo "Usage: bin/release {version}"
+	exit 1
+fi
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+git add -A
+git commit -am "commit for release $1"
+git tag -a $1 -m "$1"
+git push
+git push origin $1

@@ -4,7 +4,7 @@ import { ResultSet } from './ResultSet';
 import { Account } from './Account';
 import { Model } from './Model';
 import { Workspace } from './Workspace';
-import { FetchoAPI } from './FetchoAPI';
+import { FetchoAPI, IPatchData } from './FetchoAPI';
 
 export interface IAccessKeyProps {
     Name? : string;
@@ -17,9 +17,6 @@ export interface IAccessKeyProps {
     IsActive? : boolean;
     Workspace?: Workspace; //for making requests with
 }
-
-
-
 export class AccessKey extends Model {
     
     public Name: string;
@@ -75,6 +72,34 @@ export class AccessKey extends Model {
                 cb(this);
             }
         });
+    }
+
+
+    public Patch(patchData: IPatchData ,cb : {(accessKey: AccessKey): void;}) {
+        // FetchoAPI.patchWorkspace(
+        //     this.Id,
+        //     {
+        //         Patch : patchData,
+        //         cb : (response : any) => {
+        //             this.assign(response);
+        //             cb(this);
+        //         }
+        //     }
+        // );
+    }
+
+
+    public PatchWorkspace(patchData: IPatchData ,cb : {(accessKey: AccessKey): void;}) {
+        FetchoAPI.patchWorkspace(
+            this.Id,
+            {
+                Patch : patchData,
+                cb : (response : any) => {
+                    this.assign(response);
+                    cb(this);
+                }
+            }
+        );
     }
 
     public static on(evt : string, cb : {(account: Account): void;}){

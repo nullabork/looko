@@ -44,9 +44,15 @@ export interface IGetAccessKey  extends IRequest  {
     AccessKeyID: string;
 }
 
-export interface IUpdateWorkspace  extends IRequest  {
-    AccessKeyWorkspace: AccessKey;
+
+export interface IPatchData {
+    [index: string]: any;
 }
+
+export interface IPatchWorkspace  extends IRequest  {
+    Patch : IPatchData;
+}
+
 
 export class FetchoAPI extends Model {
     
@@ -128,6 +134,25 @@ export class FetchoAPI extends Model {
             .catch((err : any) => {
             });
 
+    }
+
+
+    public static patchWorkspace( AccessKeyID: string, patch : IPatchWorkspace) {
+        let endpoint = `${Config.api}/accesskey/${AccessKeyID}`;
+
+        var PatchOpts = {
+            method: 'PATCH',
+            uri: endpoint,
+            body: {
+                Workspace : patch.Patch
+            },
+            json: true // Automatically stringifies the body to JSON
+        };
+
+        rp(PatchOpts)
+            .then((body : any) => {
+                patch.cb(body)
+            });
     }
 
 

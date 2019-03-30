@@ -1,5 +1,6 @@
 import { AccessKey } from './AccessKey';
 import { Model } from './Model';
+import { FetchoAPI } from './FetchoAPI';
 
 interface IWorkspace {
     [key:string]: any; // Add index signature
@@ -41,5 +42,5 @@ export class Workspace extends Model {
         this.IsActive = props.IsActive;;
         this.IsWellknown = props.IsWellknown;;
         this.ResultCount = props.ResultCount;
-    } 
+    }
 }
