@@ -1,5 +1,6 @@
 import React, { Component, ReactNode } from 'react';
-import { AccessKey } from '@Models/AccessKey';
+import { AccessKey, Permission, Permissions } from '@Models/index';
+
 import { Icon } from '@Components/Icon';
 
 interface IWorkspaceRowProps {
@@ -10,6 +11,10 @@ interface IWorkspaceRowProps {
 
 export const WorkspaceRow = (props: IWorkspaceRowProps) => (
    <div className={["lk-workspace-row", props.isActive ? "lk-workspace-row--active" : ""].join(' ')} onClick={() => props.onSelect(props.AccessKey) }>
+      {
+         !Permission.canEdit(props.AccessKey.Permissions) ? " X - " : null
+      }
+      
       {
          props.AccessKey.Workspace.Name
       }

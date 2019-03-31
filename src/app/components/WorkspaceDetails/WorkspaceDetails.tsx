@@ -1,85 +1,115 @@
-import React, { Component, ReactNode } from 'react';
+import * as React from 'react';
+import { 
+   AccountContextProvider,
+   AccountContextInterface,
+   AccountContextConsumer
+} from '@Context/AccountContext';
+
 import { AccessKey } from '@Models/AccessKey';
 import { TextInput, IFormField, TextareaInput, CheckboxInput, DataRow } from '@Components/index';
 
 interface IWorkspaceDetailsProps {
    workspace: AccessKey;
-   wsChangeProperty : {(name :string, value : any) : void}
+   //wsChangeProperty : {(name :string, value : any) : void}
 
 }
-   {/* 
-    id: string;
-    WorkspaceId: string;
-    Name: string;
-    Description: string;
-    QueryText: string;
-    Created: string;
-    IsActive: boolean;
-    IsWellknown: boolean;
-    ResultCount: number;
-   */}
-
-
-export const WorkspaceDetails = (props: IWorkspaceDetailsProps) => {
-
-   return <div className=''>
-      <h2>
-         Workspace Details
-      </h2>
+   
+export class WorkspaceDetails extends React.Component<IWorkspaceDetailsProps, {}> {
       
-      { props.workspace && 
-         <div className='detaiols'>
+   public patchData : any;
+   public saveQuery : any;
 
-            <TextareaInput 
-               name="QueryText"  
-               label="Query Text"
-               id={props.workspace.Id + "-QueryText "}
-               value={props.workspace.Workspace.QueryText} 
-               onChange={(target : HTMLInputElement) => {
-                  props.wsChangeProperty(target.name, target.value);
-               }} />
+   constructor(props?: IWorkspaceDetailsProps){
+      super(props);
+      this.patchData = {};
+   }
 
-            <TextInput 
-               name="Name" 
-               label="Name"
-               id={props.workspace.Id + "-Name"}
-               value={props.workspace.Workspace.Name} 
-               onChange={(target : HTMLInputElement) => {
-                  props.wsChangeProperty(target.name, target.value);
-               }} />
+   propChange(context:AccountContextInterface,name:string, value:any){
+      if(context.selectedWorkspace){
+         this.patchData[name] = value;
+         
+         context.set((state) => {
+            state.selectedWorkspace.Workspace[name] = value;
+         });
 
-            <TextInput 
-               name="Description" 
-               label="Description"
-               id={props.workspace.Id + "-Description"}
-               value={props.workspace.Workspace.Description} 
-               onChange={(target : HTMLInputElement) => {
-                  props.wsChangeProperty(target.name, target.value);
-               }} /> 
-            
-            <CheckboxInput 
-               name="IsActive" 
-               label="Is Active"
-               id={props.workspace.Id + "-IsActive"}
-               checked={props.workspace.Workspace.IsActive} 
-               onChange={(target : HTMLInputElement) => {
-                  props.wsChangeProperty(target.name, target.checked ? true : false);
-               }} />
+         clearTimeout(this.saveQuery);
+         this.saveQuery = setTimeout(() => {
 
-            <CheckboxInput 
-               name="IsWellknown" 
-               label="Is Wellknown"
-               id={props.workspace.Id + "-IsWellknown"}
-               checked={props.workspace.Workspace.IsWellknown} 
-               onChange={(target : HTMLInputElement) => {
-                  props.wsChangeProperty(target.name, target.checked ? true : false);
-               }} />
+            context.selectedWorkspace.PatchWorkspace(this.patchData,() => {
+               console.log('updated');
+            });
 
-            <DataRow label="Workspace Id" data={props.workspace.Workspace.WorkspaceId} />
-            <DataRow label="Result Count" data={props.workspace.Workspace.ResultCount} />
-            <DataRow label="Created" data={props.workspace.Workspace.Created} />
-         </div>
+            this.patchData = {};
+         }, 1000);
       }
-   </div>
+   }
+
+   render() {
+      return (
+
+         <div className=''>
+            <h2>
+               Workspace Details
+            </h2>
+            
+            <AccountContextConsumer>
+            
+               {s => s && (
+                  <div className='detaiols'>
+                     <TextareaInput 
+                        name="QueryText"  
+                        label="Query Text"
+                        id={s.selectedWorkspace.Workspace.Id + "-QueryText "}
+                        value={s.selectedWorkspace.Workspace.QueryText} 
+                        onChange={(target : HTMLInputElement) => {
+                           this.propChange(s, target.name, target.value);
+                        }} />
+
+                     <TextInput 
+                        name="Name" 
+                        label="Name"
+                        id={s.selectedWorkspace.Id + "-Name"}
+                        value={s.selectedWorkspace.Workspace.Name} 
+                        onChange={(target : HTMLInputElement) => {
+                           this.propChange(s, target.name, target.value);
+                        }} />
+
+                     <TextInput 
+                        name="Description" 
+                        label="Description"
+                        id={s.selectedWorkspace.Id + "-Description"}
+                        value={s.selectedWorkspace.Workspace.Description} 
+                        onChange={(target : HTMLInputElement) => {
+                           this.propChange(s, target.name, target.value);
+                        }} /> 
+                     
+                     <CheckboxInput 
+                        name="IsActive" 
+                        label="Is Active"
+                        id={s.selectedWorkspace.Id + "-IsActive"}
+                        checked={s.selectedWorkspace.Workspace.IsActive} 
+                        onChange={(target : HTMLInputElement) => {
+                           this.propChange(s, target.name, target.checked ? true : false);
+                        }} />
+
+                     <CheckboxInput 
+                        name="IsWellknown" 
+                        label="Is Wellknown"
+                        id={s.selectedWorkspace.Id + "-IsWellknown"}
+                        checked={s.selectedWorkspace.Workspace.IsWellknown} 
+                        onChange={(target : HTMLInputElement) => {
+                           this.propChange(s, target.name, target.checked ? true : false);
+                        }} />
+
+                     <DataRow label="Workspace Id" data={s.selectedWorkspace.Workspace.WorkspaceId} />
+                     <DataRow label="Result Count" data={s.selectedWorkspace.Workspace.ResultCount} />
+                     <DataRow label="Created" data={s.selectedWorkspace.Workspace.Created} />
+                  </div>
+               
+               )}
+            </AccountContextConsumer>
+         </div>
+      )
+   }
 }
 

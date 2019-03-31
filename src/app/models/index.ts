@@ -6,3 +6,4 @@ export { Result } from './Result';
 export { ResultSet, IResult } from './ResultSet';
 export { Workspace } from './Workspace';
 export { Types } from './Types.enum';
+export { Permission, Permissions } from './Permission';

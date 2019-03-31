@@ -5,7 +5,7 @@ import { Account } from './Account';
 import { Model } from './Model';
 import { Workspace } from './Workspace';
 import { FetchoAPI, IPatchData } from './FetchoAPI';
-
+import { Permission, Permissions } from './Permission';
 export interface IAccessKeyProps {
     Name? : string;
     Id? : string;
@@ -16,6 +16,7 @@ export interface IAccessKeyProps {
     Permissions? : number;
     IsActive? : boolean;
     Workspace?: Workspace; //for making requests with
+    Revision?: number;
 }
 export class AccessKey extends Model {
     
@@ -29,6 +30,7 @@ export class AccessKey extends Model {
     public IsActive : boolean;
     public Workspace: Workspace; //for making requests with
     public ResultSet?: ResultSet;
+    public Revision: number;
 
     constructor( props?: IAccessKeyProps){
         super();
@@ -47,13 +49,12 @@ export class AccessKey extends Model {
             accessKey.IsWellknown = props.IsWellknown;
             accessKey.Permissions = props.Permissions;
             accessKey.IsActive = props.IsActive;
+            accessKey.Revision = props.Revision;
 
             let ws = props.Workspace;
             if(ws) {
                 accessKey.Workspace = new Workspace(ws);
             };
-
-
         }
     }
 
@@ -74,18 +75,12 @@ export class AccessKey extends Model {
         });
     }
 
+    // public can(){
+    //     Permission.canEdit()
+    // }
 
     public Patch(patchData: IPatchData ,cb : {(accessKey: AccessKey): void;}) {
-        // FetchoAPI.patchWorkspace(
-        //     this.Id,
-        //     {
-        //         Patch : patchData,
-        //         cb : (response : any) => {
-        //             this.assign(response);
-        //             cb(this);
-        //         }
-        //     }
-        // );
+
     }
 
 
@@ -93,7 +88,13 @@ export class AccessKey extends Model {
         FetchoAPI.patchWorkspace(
             this.Id,
             {
-                Patch : patchData,
+                Patch : {
+                    Revision : this.Revision,
+                    Workspace : {
+                        ...patchData,
+                        Revision : this.Workspace.Revision
+                    }
+                },
                 cb : (response : any) => {
                     this.assign(response);
                     cb(this);

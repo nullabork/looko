@@ -115,7 +115,8 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
                handleSelectAccessKey={ (ak : AccessKey) => { this.handleSelectAccessKey(ak)}}
                onResultSelect={(result: IResult) => { this.onResultSelect(result)}}
                onWorkspaceConfig={() => { this.onWorkspaceConfig() }}
-               wsChangeProperty={(name:string,value:any) => { this.handleWSPropertyChange(name, value)}} />
+               //wsChangeProperty={(name:string,value:any) => { this.handleWSPropertyChange(name, value)}} 
+               />
          </AccountContextProvider>
       )
    }

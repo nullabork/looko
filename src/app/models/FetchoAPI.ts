@@ -10,14 +10,12 @@ export interface IWorkspacesProps {
     accessKey? : string;
 }
 
-
 export interface IResponse {
     body : any
 }
 
-
 export interface IRequest  {
-     cb: {(body:any): void;}
+     cb: {(body:any, response:string): void;}
 }
 
 export interface IResults extends IRequest  {
@@ -67,7 +65,7 @@ export class FetchoAPI extends Model {
 
         rp(PostOpts)
             .then((body : any) => {
-                props.cb(body)
+                props.cb(body, "200")
             });
     }
 
@@ -88,7 +86,7 @@ export class FetchoAPI extends Model {
 
         rp(GetOpts)
             .then((body : any) => {
-                props.cb(body)
+                props.cb(body, "200")
             })
             .catch((err : any) => {
                 FetchoAPI.createAccount(props);
@@ -109,7 +107,7 @@ export class FetchoAPI extends Model {
 
         rp(PostOpts)
             .then((body : any) => {
-                props.cb(body)
+                props.cb(body, "200")
             });
     }
 
@@ -129,7 +127,7 @@ export class FetchoAPI extends Model {
 
         rp(GetOpts)
             .then((body : any) => {
-                props.cb(body);
+                props.cb(body, "200");
             })
             .catch((err : any) => {
             });
@@ -143,15 +141,16 @@ export class FetchoAPI extends Model {
         var PatchOpts = {
             method: 'PATCH',
             uri: endpoint,
-            body: {
-                Workspace : patch.Patch
-            },
-            json: true // Automatically stringifies the body to JSON
+            body: patch.Patch,
+            json: true, // Automatically stringifies the body to JSON
         };
 
         rp(PatchOpts)
             .then((body : any) => {
-                patch.cb(body)
+                patch.cb(body, "200");
+            }).catch((err : any) => {
+                patch.cb(err.response.body, err.statusCode);
+
             });
     }
 

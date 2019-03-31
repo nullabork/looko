@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import IDashboardProps from './IDashboardProps';
-import { Workspace, AccessKey, IResult, Types} from '@Models/index';
+import { Workspace, AccessKey, IResult, Types, Permission, Permissions} from '@Models/index';
 import { 
   Page,
   Icon,
@@ -26,7 +26,7 @@ interface DashboardViewProps {
   onNewAccessKey? : {(): void;};
   onResultSelect? : {(result:IResult): void;};
   onWorkspaceConfig? : {(): void;};
-  wsChangeProperty : {(name :string, value : any) : void}
+  //wsChangeProperty : {(name :string, value : any) : void}
 }
 
 export const DashboardView = (props: DashboardViewProps) => (
@@ -79,7 +79,7 @@ export const DashboardView = (props: DashboardViewProps) => (
                   {
                      s.detailsView == Types.WORKSPACE ? (
                       <WorkspaceDetails
-                        wsChangeProperty={props.wsChangeProperty}
+                        //wsChangeProperty={props.wsChangeProperty}
                         workspace={s.selectedWorkspace} />
                     ) : null 
                   }

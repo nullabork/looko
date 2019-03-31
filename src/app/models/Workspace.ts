@@ -15,6 +15,7 @@ export interface IWorkspaceProps {
     IsActive: boolean;
     IsWellknown: boolean;
     ResultCount: number;
+    Revision: number;
     [propName: string]: any;
 }
 export class Workspace extends Model {
@@ -27,6 +28,7 @@ export class Workspace extends Model {
     public IsActive: boolean;
     public IsWellknown: boolean;
     public ResultCount: number;
+    public Revision: number;
     [propName: string]: any;
 
     public AccessKeys : Array<AccessKey>;
@@ -39,8 +41,9 @@ export class Workspace extends Model {
         this.Description = props.Description;
         this.QueryText = props.QueryText;
         this.Created = props.Created;
-        this.IsActive = props.IsActive;;
-        this.IsWellknown = props.IsWellknown;;
+        this.IsActive = props.IsActive;
+        this.IsWellknown = props.IsWellknown;
         this.ResultCount = props.ResultCount;
+        this.Revision = props.Revision;
     }
 }
