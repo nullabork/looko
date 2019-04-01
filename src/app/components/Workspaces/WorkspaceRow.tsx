@@ -18,6 +18,7 @@ export const WorkspaceRow = (props: IWorkspaceRowProps) => (
       {
          props.AccessKey.Workspace.Name
       }
+      <div><small> { props.AccessKey.getCreateDate().toDateString() }</small></div>
       <div className="lk-workspace-row--underline"></div>
    </div>
 );

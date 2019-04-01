@@ -49,19 +49,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
          }
       });
    }
-   
-
-   handleSelectAccessKey(selectedWorkspace: AccessKey) {
-      this.setState({
-         selectedWorkspace
-      });
-
-      selectedWorkspace.ResultSet.next(() => {
-         this.setState({
-            selectedWorkspace
-         });
-      });
-   }
 
    handleWSPropertyChange(name:string,value:any){
       if(this.state.selectedWorkspace){
@@ -103,7 +90,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
             account :  this.state.account
          })
       });
-     
    }
 
    render() {
@@ -112,7 +98,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
          <AccountContextProvider value={this.state}>
             <DashboardView 
                onNewAccessKey={ () => this.onNewAccessKey() }
-               handleSelectAccessKey={ (ak : AccessKey) => { this.handleSelectAccessKey(ak)}}
                onResultSelect={(result: IResult) => { this.onResultSelect(result)}}
                onWorkspaceConfig={() => { this.onWorkspaceConfig() }}
                //wsChangeProperty={(name:string,value:any) => { this.handleWSPropertyChange(name, value)}} 

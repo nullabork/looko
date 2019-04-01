@@ -9,3 +9,5 @@ export { TextInput } from './TextInput';
 export { TextareaInput } from './TextareaInput';
 export { CheckboxInput } from './CheckboxInput';
 export { DataRow } from './DataRow';
+export { PageLeft } from './PageLeft';
+export { Pagination } from './Pagination';

@@ -1,18 +1,19 @@
 
 
 import * as React from 'react';
+import { parse } from 'date-fns';
 
 import IDashboardProps from './IDashboardProps';
 import { Workspace, AccessKey, IResult, Types, Permission, Permissions} from '@Models/index';
 import { 
   Page,
   Icon,
-  Workspaces,
-  WorkspaceRow,
+  PageLeft,
   Results,
   ResultRow,
   ResultDetails,
-  WorkspaceDetails
+  WorkspaceDetails,
+  Pagination
 } from '@Components/index';
 
 require("./sass/dashboard.scss");
@@ -22,30 +23,22 @@ import {
 } from '@Context/AccountContext';
 
 interface DashboardViewProps {
-  handleSelectAccessKey? : {(selectedWorkspace:AccessKey): void;}
   onNewAccessKey? : {(): void;};
   onResultSelect? : {(result:IResult): void;};
   onWorkspaceConfig? : {(): void;};
   //wsChangeProperty : {(name :string, value : any) : void}
 }
 
+let sortWorkspaceOrder = (aAK :  AccessKey, bAK : AccessKey) => bAK.getCreateDate().getTime() - aAK.getCreateDate().getTime();
+
 export const DashboardView = (props: DashboardViewProps) => (
     <AccountContextConsumer>
       {s => s && (
           <Page>
-              <Workspaces>
-                {
-                  s.account.AccessKeys.map( (ak : AccessKey) => {
-                      return <WorkspaceRow 
-                        key={ak.Id}
-                        AccessKey={ak}
-                        onSelect={props.handleSelectAccessKey}
-                        isActive={ (s.selectedWorkspace && s.selectedWorkspace.Name == ak.Name) } />
-                  })
-                }
-              </Workspaces>
 
-              { s.selectedWorkspace &&
+            <PageLeft />
+
+              { s.selectedWorkspace && s.selectedWorkspace.ResultSet.results.length ?
                   <div className='col-6 d-flex flex-column vh-100 d-flex bd-highlight m-0'>
 
                     <h2 className='p-2'>
@@ -59,7 +52,8 @@ export const DashboardView = (props: DashboardViewProps) => (
                         {
                           s.selectedWorkspace.ResultSet.results.map((rw : IResult) => {
                             return <ResultRow 
-                              key={rw.UriHash} 
+                              key={rw.UriHash + rw.DataHash + rw.Description} 
+                              
                               result={rw}
                               selectedWorkspace={s.selectedResult && s.selectedResult.UriHash == rw.UriHash}
                               onSelect={props.onResultSelect}
@@ -69,8 +63,11 @@ export const DashboardView = (props: DashboardViewProps) => (
                         
                       </Results>
                     </div>
+                    
+                    <Pagination selectedAccessKey={s.selectedWorkspace} />
+
                 </div>
-              }
+              : null }
 
               <div className='overflow-auto p-2 col bg-light vh-100 border-left border-info'>
                 <div className=''>

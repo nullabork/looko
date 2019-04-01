@@ -6,6 +6,7 @@ import { Model } from './Model';
 import { Workspace } from './Workspace';
 import { FetchoAPI, IPatchData } from './FetchoAPI';
 import { Permission, Permissions } from './Permission';
+
 export interface IAccessKeyProps {
     Name? : string;
     Id? : string;
@@ -17,6 +18,7 @@ export interface IAccessKeyProps {
     IsActive? : boolean;
     Workspace?: Workspace; //for making requests with
     Revision?: number;
+    CreatedDate? : Date;
 }
 export class AccessKey extends Model {
     
@@ -50,7 +52,6 @@ export class AccessKey extends Model {
             accessKey.Permissions = props.Permissions;
             accessKey.IsActive = props.IsActive;
             accessKey.Revision = props.Revision;
-
             let ws = props.Workspace;
             if(ws) {
                 accessKey.Workspace = new Workspace(ws);

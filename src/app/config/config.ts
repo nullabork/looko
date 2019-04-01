@@ -12,7 +12,7 @@ let envs = {
   "development" :  {
     "api" : "https://api.webdiggo.nullabork.dev/api/v1",
     "pager" : {
-      "count" : 20,
+      "count" : 40,
       "offset" : 0
     }
   },
@@ -20,7 +20,7 @@ let envs = {
   "production" : {
     "api" : "https://api.webdiggo.nullabork.dev/api/v1",
     "pager" : {
-      "count" : 20,
+      "count" : 40,
       "offset" : 0
     }
   }

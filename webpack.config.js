@@ -7,7 +7,7 @@ const alias = require('./aliases.config.js'),
 
 module.exports = {
     entry: {
-        app: ['./src/app/App.tsx', 'webpack-hot-middleware/client'],
+        app: ['./src/app/App.tsx'],
         vendor: ['react', 'react-dom']
     },
     output: {

@@ -1,6 +1,7 @@
 import { Model } from './Model';
 import { FetchoAPI } from './FetchoAPI';
 import { AccessKey } from './AccessKey';
+import { Config } from '@Config/config'
 
 
  
@@ -41,32 +42,69 @@ export class ResultSet extends Model {
         this.accessKey = accessKey;
 
         this.pager = {
-            count : 100,
+            count : Config.pager.count,
             offset : 0
         };
     }
 
-
-    next(cb : {(): void;}) {
-
-        if(!this.results.length) {
-            this.pager.offset = 0;
-        } else {
-            this.pager.offset += this.pager.count;
-        }
-
-
+    fetch(cb : {(): void;}) {
         FetchoAPI.getResults({
             resultSet : this,
             cb : (body : any) => {
                 this.results = [
-                    ...this.results,
+                    // ...this.results,
                     ...body
                 ];
                 cb();
             }
         })
     }
+
+    resetPager (){
+        if(this.pager.count > this.accessKey.Workspace.ResultCount ) {
+            this.pager.count = this.accessKey.Workspace.ResultCount;
+        } else {
+            this.pager.count = Config.pager.count;
+        }
+    }
+
+
+    next() : ResultSet {
+        this.resetPager();
+        this.pager.offset += this.pager.count;
+        if(this.accessKey.Workspace.ResultCount - this.pager.count < this.pager.offset){
+            this.pager.offset = this.accessKey.Workspace.ResultCount - this.pager.count;
+        }
+
+        return this;
+    }
+
+    prev() : ResultSet {
+        this.resetPager();
+        this.pager.offset -= this.pager.count;
+        if(this.pager.offset < 0 ){
+            this.pager.offset = 0;
+        }
+        return this;
+    }
+
+    max() : ResultSet {
+        this.resetPager();
+        this.pager.offset = this.accessKey.Workspace.ResultCount - this.pager.count;
+        if(this.pager.offset < 0 ){
+            this.pager.offset = 0;
+        }
+        return this;
+    }
+    
+    zero() : ResultSet {
+        this.resetPager();
+        this.pager.offset = 0;
+        return this;
+    }
+
+
+    
 
 
     /**
