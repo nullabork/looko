@@ -7,6 +7,12 @@ export interface AccountContextInterface {
   selectedWorkspace?: AccessKey;
   selectedResult? : IResult;
   detailsView : Types;
+
+  defaultPager : {
+    count : number;
+    offset : number;
+  };
+
 }
 
 const context = React.createContext<AccountContextInterface | null>(null);

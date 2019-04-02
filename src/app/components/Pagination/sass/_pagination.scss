@@ -6,46 +6,58 @@
 }
 
 .lk-pagination {
-  display: flex;
+
   border-top: 1px solid #aaaaaa;
-  align-items: center;
-  justify-content: center;
-  margin-right: -15px;
-  margin-left: -15px;
-  
-  .lk-pagination-item {
-    max-width: 45px;
-    cursor: pointer;
-    height: 45px;
-    flex: 1;
-    text-align: center;
-    display: inline-block;
-    display: flex;
-    -webkit-align-items: center; /* Safari 7.0+ */
-    align-items: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    border-left: 1px solid #aaaaaa;
 
-    &--fill {
-      flex:auto;
-      max-width: none;
+  .lk-pagination-menu {
+    height:0;
+    // transition: height 300ms;
+    display:none;
+    
+    &--active {
+      display:flex;
+      border-bottom: 1px solid #aaaaaa;
+      height:auto;
     }
-
-    &:hover {
-      background:$color-primary-3;
-      color:white;
-      &svg {
-        fill:white;
-      }
-    }
-
-    &:first-child {
-      border: none;
-    }
-
   }
 
+  .lk-pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .lk-pagination-item {
+      max-width: 45px;
+      cursor: pointer;
+      height: 45px;
+      flex: 1;
+      text-align: center;
+      display: inline-block;
+      display: flex;
+      -webkit-align-items: center; /* Safari 7.0+ */
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      border-left: 1px solid #aaaaaa;
+
+      &--fill {
+        flex:auto;
+        max-width: none;
+      }
+
+      &:hover {
+        background:$color-primary-3;
+        color:white;
+        &svg {
+          fill:white;
+        }
+      }
+
+      &:first-child {
+        border: none;
+      }
+    }
+  }
 } 
 
  

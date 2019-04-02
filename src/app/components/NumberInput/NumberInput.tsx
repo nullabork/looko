@@ -1,22 +1,21 @@
 import * as React from 'react';
 import {IFormField} from '@Components/FormField';
-
-interface ITextareaInputProps extends IFormField {
-
+interface INumberInputProps extends IFormField {
+   number? : number;
 }
 
 
-export const TextareaInput = (props: ITextareaInputProps) => (
+export const NumberInput = (props: INumberInputProps) => (
    <div className={[props.className, "lk-input", "form-group"].join(' ')}>
       <dl>
          <dt><label><small>{props.label}</small></label></dt>
          <dd>
-            <textarea 
+            <input 
                className="w-100 form-control" 
-               name={props.name}
-               value={props.value}
-               onChange={(e) => props.onChange && props.onChange(e.target) } >
-            </textarea>
+               name={props.name} 
+               type="number"
+               value={props.number}
+               onChange={(e) => props.onChange && props.onChange(e.target) } />
          </dd>
       </dl>
    </div>

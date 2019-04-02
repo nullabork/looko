@@ -39,30 +39,27 @@ export const DashboardView = (props: DashboardViewProps) => (
             <PageLeft />
 
               { s.selectedWorkspace && s.selectedWorkspace.ResultSet.results.length ?
-                  <div className='col-6 d-flex flex-column vh-100 d-flex bd-highlight m-0'>
+                  <div className='col-6 d-flex flex-column vh-100 d-flex bd-highlight p-0 m-0'>
 
                     <h2 className='p-2'>
                       {s.selectedWorkspace.Name}
                       <Icon name='settings' onClick={ props.onWorkspaceConfig }/>
                     </h2>
                     
-                    <div className='overflow-auto p-2'>
+                    
                       <Results>
 
                         {
                           s.selectedWorkspace.ResultSet.results.map((rw : IResult) => {
                             return <ResultRow 
-                              key={rw.UriHash + rw.DataHash + rw.Description} 
-                              
+                              key={rw.UriHash + rw.DataHash + rw.Description}
                               result={rw}
                               selectedWorkspace={s.selectedResult && s.selectedResult.UriHash == rw.UriHash}
-                              onSelect={props.onResultSelect}
-                              />
+                              onSelect={props.onResultSelect} />
                           })
                         }
                         
                       </Results>
-                    </div>
                     
                     <Pagination selectedAccessKey={s.selectedWorkspace} />
 

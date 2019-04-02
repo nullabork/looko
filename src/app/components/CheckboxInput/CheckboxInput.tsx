@@ -21,7 +21,7 @@ export const CheckboxInput = (props: ICheckboxInputProps) => (
                   name={props.name}
                   className="custom-control-input" 
                   id={props.id}  
-                  onChange={(e) => props.onChange(e.target) }
+                  onChange={(e) => props.onChange && props.onChange(e.target) }
                   checked={props.checked ? true : false}
                   />
                <label className="custom-control-label" htmlFor={props.id}></label>

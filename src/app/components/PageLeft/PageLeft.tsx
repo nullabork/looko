@@ -5,8 +5,8 @@ import {
    AccountContextConsumer
 } from '@Context/AccountContext';
 
-import { AccessKey } from '@Models/AccessKey';
-import { TextInput, IFormField, TextareaInput, CheckboxInput, DataRow, Workspaces, WorkspaceRow } from '@Components/index';
+import { AccessKey, Types } from '@Models/index';
+import { Workspaces, WorkspaceRow } from '@Components/index';
 
 interface IPageLeftProps {
 
@@ -25,12 +25,14 @@ export class PageLeft extends React.Component<IPageLeftProps, {}> {
    selectWorkspace(context: AccountContextInterface, selectedAccessKey: AccessKey) {
       context.set((state) => {
          state.selectedWorkspace = selectedAccessKey;
+         state.detailsView = Types.WORKSPACE;
       });
 
       if (!selectedAccessKey.ResultSet.results.length) {
          selectedAccessKey.ResultSet.fetch(() => {
             context.set((state) => {
                state.selectedWorkspace = selectedAccessKey;
+               state.detailsView = Types.WORKSPACE; 
             })
          });
       }

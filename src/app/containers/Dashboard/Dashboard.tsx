@@ -1,6 +1,7 @@
 import * as React from 'react';
 import IDashboardProps from './IDashboardProps';
 import { AccessKey, Account, FetchoAPI,IResult, Types  } from '@Models/index';
+import { Config } from '@Config/config'
 import { 
    AccountContextProvider,
    AccountContextInterface
@@ -31,7 +32,11 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
          account : new Account(),
          selectedWorkspace : null,
          selectedResult : null,
-         detailsView : Types.NULL
+         detailsView : Types.NULL,
+         defaultPager : {
+            offset : Config.pager.offset,
+            count : Config.pager.count
+         }
       };
 
 
@@ -93,7 +98,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
    }
 
    render() {
-      
       return (
          <AccountContextProvider value={this.state}>
             <DashboardView 

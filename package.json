@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack --mode production",
-    "builddev": "./node_modules/.bin/webpack --mode development",
+    "build": "./node_modules/.bin/webpack --config prod.webpack.config.js --mode production",
+    "builddev": "./node_modules/.bin/webpack --config webpack.config.js --mode development",
     "start": "npm run builddev && node server.js"
   },
   "author": "",

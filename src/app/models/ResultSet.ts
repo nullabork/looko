@@ -36,10 +36,20 @@ export class ResultSet extends Model {
         offset : number;
     };
 
+    public defaultPager: {
+        count : number;
+        offset : number;
+    };
+
     constructor(accessKey : AccessKey){
         super();
         this.results = [];
         this.accessKey = accessKey;
+
+        this.defaultPager = {
+            count : Config.pager.count,
+            offset : Config.pager.offset
+        };
 
         this.pager = {
             count : Config.pager.count,
@@ -60,11 +70,16 @@ export class ResultSet extends Model {
         })
     }
 
+    setPagerCount(count:number) : void {
+        this.defaultPager.count = count;
+        this.pager.count = count;
+    }
+
     resetPager (){
         if(this.pager.count > this.accessKey.Workspace.ResultCount ) {
             this.pager.count = this.accessKey.Workspace.ResultCount;
         } else {
-            this.pager.count = Config.pager.count;
+            this.pager.count =  this.defaultPager.count;
         }
     }
 

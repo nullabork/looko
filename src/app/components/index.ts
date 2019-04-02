@@ -8,6 +8,7 @@ export { FormField, IFormField } from './FormField';
 export { TextInput } from './TextInput';
 export { TextareaInput } from './TextareaInput';
 export { CheckboxInput } from './CheckboxInput';
+export { NumberInput } from './NumberInput';
 export { DataRow } from './DataRow';
 export { PageLeft } from './PageLeft';
 export { Pagination } from './Pagination';
