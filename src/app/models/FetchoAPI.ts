@@ -94,6 +94,25 @@ export class FetchoAPI extends Model {
 
     }
 
+
+    public static getAccessKey( props : IGetAccessKey ) {
+        
+        var GetOpts = {
+            method: 'GET',
+            uri: `${Config.api}/accesskey/${props.AccessKeyID}`,
+            json: true
+        };
+
+        rp(GetOpts)
+            .then((body : any) => {
+                props.cb(body, "200")
+            })
+            .catch((err : any) => {
+                
+            });
+
+    }
+
     public static createAccessKey(props : ICreateAccessKey) {
         let endpoint = `${Config.api}/accesskeys`;
 

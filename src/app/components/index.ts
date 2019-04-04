@@ -12,3 +12,4 @@ export { NumberInput } from './NumberInput';
 export { DataRow } from './DataRow';
 export { PageLeft } from './PageLeft';
 export { Pagination } from './Pagination';
+export { WorkspaceToolbar } from './WorkspaceToolbar';

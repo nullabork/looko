@@ -13,7 +13,8 @@ import {
   ResultRow,
   ResultDetails,
   WorkspaceDetails,
-  Pagination
+  Pagination,
+  WorkspaceToolbar
 } from '@Components/index';
 
 require("./sass/dashboard.scss");
@@ -25,7 +26,6 @@ import {
 interface DashboardViewProps {
   onNewAccessKey? : {(): void;};
   onResultSelect? : {(result:IResult): void;};
-  onWorkspaceConfig? : {(): void;};
   //wsChangeProperty : {(name :string, value : any) : void}
 }
 
@@ -41,11 +41,8 @@ export const DashboardView = (props: DashboardViewProps) => (
               { s.selectedWorkspace && s.selectedWorkspace.ResultSet.results.length ?
                   <div className='col-6 d-flex flex-column vh-100 d-flex bd-highlight p-0 m-0'>
 
-                    <h2 className='p-2'>
-                      {s.selectedWorkspace.Name}
-                      <Icon name='settings' onClick={ props.onWorkspaceConfig }/>
-                    </h2>
-                    
+                    <WorkspaceToolbar selectedAccessKey={s.selectedWorkspace} />
+                
                     
                       <Results>
 

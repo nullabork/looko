@@ -81,12 +81,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
       });
    }
 
-   onWorkspaceConfig(){
-      this.setState({
-         detailsView : Types.WORKSPACE 
-      });
-   }
-
    onNewAccessKey () {
       let ak = new AccessKey();
       ak.loadAccessKey(this.state.account, (ak) => {
@@ -103,7 +97,6 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
             <DashboardView 
                onNewAccessKey={ () => this.onNewAccessKey() }
                onResultSelect={(result: IResult) => { this.onResultSelect(result)}}
-               onWorkspaceConfig={() => { this.onWorkspaceConfig() }}
                //wsChangeProperty={(name:string,value:any) => { this.handleWSPropertyChange(name, value)}} 
                />
          </AccountContextProvider>

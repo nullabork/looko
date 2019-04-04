@@ -19,6 +19,8 @@ export interface IAccessKeyProps {
     Workspace?: Workspace; //for making requests with
     Revision?: number;
     CreatedDate? : Date;
+    Selected? : boolean;
+    
 }
 export class AccessKey extends Model {
     
@@ -69,6 +71,16 @@ export class AccessKey extends Model {
                 AccountName : account.Name,
                 Name: this.Name
             },
+            cb : (response : any) => {
+                this.assign(response);
+                cb(this);
+            }
+        });
+    }
+
+    public update(cb : {(accessKey: AccessKey): void;}) {
+        FetchoAPI.getAccessKey({
+            AccessKeyID : this.Id,
             cb : (response : any) => {
                 this.assign(response);
                 cb(this);
