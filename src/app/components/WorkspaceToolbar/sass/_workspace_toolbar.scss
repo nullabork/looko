@@ -1,0 +1,63 @@
+@import '~@Sass/_vars.scss';
+
+.lk-icon-circle {
+
+
+}
+
+.lk-workspace_toolbar {
+
+  border-bottom: 1px solid #aaaaaa;
+
+  .lk-workspace_toolbar-menu {
+    height:0;
+    // transition: height 300ms;
+    display:none;
+    
+    &--active {
+      display:flex;
+      border-top: 1px solid #aaaaaa;
+      height:auto;
+    }
+  }
+
+  .lk-workspace_toolbar-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .lk-workspace_toolbar-item {
+      max-width: 45px;
+      cursor: pointer;
+      height: 45px;
+      flex: 1;
+      text-align: center;
+      display: inline-block;
+      display: flex;
+      -webkit-align-items: center; /* Safari 7.0+ */
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      border-left: 1px solid #aaaaaa;
+
+      &--fill {
+        flex:auto;
+        max-width: none;
+      }
+
+      &:hover {
+        background:$color-primary-3;
+        color:white;
+        &svg {
+          fill:white;
+        }
+      }
+
+      &:first-child {
+        border: none;
+      }
+    }
+  }
+} 
+
+ 
