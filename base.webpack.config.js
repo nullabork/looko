@@ -15,7 +15,6 @@ module.exports = {
         filename: 'js/[name].bundle.js',
         publicPath : '/'
     },
-    devtool: 'source-map',
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
         alias

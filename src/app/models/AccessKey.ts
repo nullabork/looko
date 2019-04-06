@@ -40,12 +40,22 @@ export class AccessKey extends Model {
         super();
         this.assign(props);
         this.ResultSet = new ResultSet(this);
-        //this.Name  = props.Name || AccessKey.GenerateID();
+
+        if(! this.Name ){
+            // this.Name = AccessKey.GenerateID();
+        }
+
+        if(! this.Workspace ){
+            this.Workspace = new Workspace({
+                Name : AccessKey.GenerateID(3)
+            });
+        }
+        
     }
 
     public static assign(accessKey: AccessKey, props?: IAccessKeyProps){
         if (props) {
-            accessKey.Name = props.Name || Account.GenerateID();
+            accessKey.Name = props.Name || AccessKey.GenerateID();
             accessKey.Id = props.Id;
             accessKey.AccountName = props.AccountName;
             accessKey.Expiry = props.Expiry;
@@ -65,11 +75,12 @@ export class AccessKey extends Model {
         AccessKey.assign(this, props);
     }
 
-    public loadAccessKey(account : Account,  cb : {(accessKey: AccessKey): void;}) {
+    public createAccessKey(account : Account,  cb : {(accessKey: AccessKey): void;}) {
         FetchoAPI.createAccessKey({
             AccessKeyData : {
                 AccountName : account.Name,
-                Name: this.Name
+                Name: this.Name,
+                Workspace : this.Workspace
             },
             cb : (response : any) => {
                 this.assign(response);

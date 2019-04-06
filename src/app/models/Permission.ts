@@ -32,8 +32,8 @@ export class Permission {
 
     public static check(checkValue: number){
       return {
-        is : (isValue: Array<Permissions>) => {
-          let bitOp = (checkValue & [4,16].reduce((acc,c) => (acc | c)) );
+        is : (isValues: Array<Permissions>) => {
+          let bitOp = (checkValue & isValues.reduce((acc,c) => (acc | c)) );
           return bitOp != 0;
         }
       }

@@ -5,29 +5,28 @@
 
 }
 
-.lk-pagination {
+.lk-account_toolbar {
 
-  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
 
-  .lk-pagination-menu {
+  .lk-account_toolbar-menu {
     height:0;
     // transition: height 300ms;
     display:none;
     
     &--active {
       display:flex;
-      border-bottom: 1px solid #aaaaaa;
+      border-top: 1px solid #aaaaaa;
       height:auto;
     }
   }
 
-  .lk-pagination-bar {
+  .lk-account_toolbar-bar {
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
     
-    .lk-pagination-item { 
+    .lk-account_toolbar-item {
       max-width: 45px;
       cursor: pointer;
       height: 45px;
@@ -60,3 +59,5 @@
     }
   }
 } 
+
+ 

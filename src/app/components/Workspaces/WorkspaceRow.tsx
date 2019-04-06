@@ -9,16 +9,31 @@ interface IWorkspaceRowProps {
    isActive: boolean;
 }
 
-export const WorkspaceRow = (props: IWorkspaceRowProps) => (
-   <div className={["lk-workspace-row", props.isActive ? "lk-workspace-row--active" : ""].join(' ')} onClick={() => props.onSelect(props.AccessKey) }>
-      {
-         !Permission.canEdit(props.AccessKey.Permissions) ? " X - " : null
-      }
-      
-      {
-         props.AccessKey.Workspace.Name
-      }
-      <div><small> { props.AccessKey.getCreateDate().toDateString() }</small></div>
-      <div className="lk-workspace-row--underline"></div>
-   </div>
-);
+export const WorkspaceRow = (props: IWorkspaceRowProps) => {
+   let canEdit = Permission.canEdit(props.AccessKey.Permissions);
+   return (
+      <div 
+         className={[
+            "lk-workspace-row",
+            props.isActive ? "lk-workspace-row--active" : "",
+            !canEdit ? "lk-workspace-row--no-edit" : ""
+            ].join(' ')}
+            onClick={() => props.onSelect(props.AccessKey) }>
+         
+         <div className="lk-workspace-row--content">
+            {
+               canEdit? 
+               <Icon name='edit-2' width="14" height="14" className='lk-icon-circle lk-icon-circle--small'/>
+               : 
+               <Icon name='lock' width="14" height="14" className='lk-icon-circle lk-icon-circle--small'/>
+            }
+            
+            {
+               props.AccessKey.Workspace.Name
+            }
+            {/* <div><small> { props.AccessKey.getCreateDate().toDateString() }</small></div> */}
+            <div className="lk-workspace-row--underline"></div>
+         </div>
+      </div>
+   );
+};

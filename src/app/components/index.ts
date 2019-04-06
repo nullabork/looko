@@ -13,3 +13,4 @@ export { DataRow } from './DataRow';
 export { PageLeft } from './PageLeft';
 export { Pagination } from './Pagination';
 export { WorkspaceToolbar } from './WorkspaceToolbar';
+export { AccountToolbar } from './AccountToolbar';

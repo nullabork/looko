@@ -5,16 +5,26 @@ import {
    AccountContextConsumer
 } from '@Context/AccountContext';
 
-import { AccessKey, Types } from '@Models/index';
-import { Workspaces, WorkspaceRow } from '@Components/index';
+import { AccessKey, Types, Permission } from '@Models/index';
+import { Workspaces, WorkspaceRow, AccountToolbar } from '@Components/index';
+import './sass/_page.scss';
 
 interface IPageLeftProps {
-
+   collapsed : boolean;
 }
 
-
-let sortWorkspaceOrder = (aAK: AccessKey, bAK: AccessKey) => bAK.getCreateDate().getTime() - aAK.getCreateDate().getTime();
-
+let sortWorkspaceOrder = (aAK: AccessKey, bAK: AccessKey) => {
+   let p1 = Permission.canEdit(aAK.Permissions),
+     p2 = Permission.canEdit(bAK.Permissions);
+ 
+   if ( !p1 && p2) {
+     return 1;
+   } else if(p1 && !p2) {
+     return -1;
+   }
+   
+   return bAK.getCreateDate().getTime() - aAK.getCreateDate().getTime()
+}
 
 export class PageLeft extends React.Component<IPageLeftProps, {}> {
 
@@ -24,38 +34,55 @@ export class PageLeft extends React.Component<IPageLeftProps, {}> {
 
    selectWorkspace(context: AccountContextInterface, selectedAccessKey: AccessKey) {
       context.set((state) => {
-         state.selectedWorkspace = selectedAccessKey;
-         state.detailsView = Types.WORKSPACE;
+         return {
+            ...state,
+            selectedAccessKey,
+            detailsView : Types.WORKSPACE
+         }
       });
 
       if (!selectedAccessKey.ResultSet.results.length) {
+
          selectedAccessKey.ResultSet.fetch(() => {
             context.set((state) => {
-               state.selectedWorkspace = selectedAccessKey;
-               state.detailsView = Types.WORKSPACE; 
-            })
+               if (selectedAccessKey.Id == state.selectedAccessKey.Id) {
+                  return {
+                     ...state,
+                     selectedAccessKey,
+                     detailsView : Types.WORKSPACE
+                  }
+               }
+            });
          });
+         
       }
    }
-
+   
    render() {
       return (
-         <AccountContextConsumer>
-            {s => s && (
-               <Workspaces>
-                  {
-                     s.account.AccessKeys.sort(sortWorkspaceOrder).map((ak: AccessKey) => {
-                        return <WorkspaceRow
-                           key={ak.Id}
-                           AccessKey={ak}
-                           onSelect={(ak: AccessKey) => this.selectWorkspace(s, ak)}
-                           isActive={(s.selectedWorkspace && s.selectedWorkspace.Name == ak.Name)} />
-                     })
-                  }
-               </Workspaces>
-            )}
-         </AccountContextConsumer>
+         <div
+            className={[
+               "lk-pageleft",
+               this.props.collapsed ? "lk-pageleft--collapsed" : ""
+            ].join(' ')}>
 
+            <AccountToolbar  />
+            <AccountContextConsumer>
+               {s => s && (
+                  <Workspaces>
+                     {
+                        s.account.AccessKeys.sort(sortWorkspaceOrder).map((ak: AccessKey) => {
+                           return <WorkspaceRow
+                              key={ak.Id}
+                              AccessKey={ak}
+                              onSelect={(ak: AccessKey) => this.selectWorkspace(s, ak)}
+                              isActive={(s.selectedAccessKey && s.selectedAccessKey.Name == ak.Name)} />
+                        })
+                     }
+                  </Workspaces>
+               )}
+            </AccountContextConsumer>
+         </div>
       )
    }
 }

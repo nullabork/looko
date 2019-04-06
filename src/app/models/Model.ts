@@ -8,8 +8,8 @@ export class Model {
     private DateCreated? : Date;
     public Created? : string;
 
-    public static GenerateID() :string {
-        return randomWords(5).join('-');
+    public static GenerateID(words? : number) :string {
+        return randomWords(words || 5).join('-');
     }
 
     public static event = new EventEmitter();

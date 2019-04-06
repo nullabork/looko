@@ -25,14 +25,18 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
       };
 
       this.state = {
-         set: (callBack:{(state:AccountContextInterface): void;}) => {
-            callBack(this.state);
-            this.setState(this.state);
+         set: (callBack:{(state:AccountContextInterface): AccountContextInterface;}) => {
+            let s = callBack(this.state);
+            console.log(s);
+            if(s){
+            this.setState(s);
+            }
          },
          account : new Account(),
-         selectedWorkspace : null,
+         selectedAccessKey : null,
          selectedResult : null,
          detailsView : Types.NULL,
+         leftMainCollapsed : false,
          defaultPager : {
             offset : Config.pager.offset,
             count : Config.pager.count
@@ -56,15 +60,15 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
    }
 
    handleWSPropertyChange(name:string,value:any){
-      if(this.state.selectedWorkspace){
-         this.state.selectedWorkspace.Workspace[name] = value;
+      if(this.state.selectedAccessKey){
+         this.state.selectedAccessKey.Workspace[name] = value;
          this.wsPatchData[name] = value;
          this.setState(this.state);
 
          clearTimeout(this.saveQuery);
          this.saveQuery = setTimeout(() => {
 
-            this.state.selectedWorkspace.PatchWorkspace(this.wsPatchData,() => {
+            this.state.selectedAccessKey.PatchWorkspace(this.wsPatchData,() => {
                console.log('updated');
             });
 
@@ -83,7 +87,7 @@ export class Dashboard extends React.Component<IDashboardProps, {}> {
 
    onNewAccessKey () {
       let ak = new AccessKey();
-      ak.loadAccessKey(this.state.account, (ak) => {
+      ak.createAccessKey(this.state.account, (ak) => {
          this.state.account.addAccessKey(ak);
          this.setState({
             account :  this.state.account

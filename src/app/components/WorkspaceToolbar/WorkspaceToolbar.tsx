@@ -38,7 +38,10 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
       this.props.selectedAccessKey.update((ak : AccessKey) => {
 
          context.set((state: AccountContextInterface) => {
-            state.selectedWorkspace = this.props.selectedAccessKey;
+            return {
+               ...state,
+               selectedAccessKey : this.props.selectedAccessKey
+            }
          });
 
       })
@@ -46,7 +49,10 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
 
    selectWorkspaceDtails(context: AccountContextInterface): void {
       context.set((state: AccountContextInterface) => {
-         state.detailsView = Types.WORKSPACE;
+         return {
+            ...state,
+            detailsView :  Types.WORKSPACE
+         }
       });
    }
 
@@ -65,7 +71,7 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
 
                         <div className='lk-workspace_toolbar-item lk-workspace_toolbar-item--fill'>
 
-                           {s.selectedWorkspace.Workspace.Name}
+                           {s.selectedAccessKey.Workspace.Name}
 
                         </div>
                         

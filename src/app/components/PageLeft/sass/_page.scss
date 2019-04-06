@@ -1,0 +1,49 @@
+@import '~@Sass/_vars.scss';
+
+.lk-pageleft{
+  background-image: linear-gradient($color-primary-1, $color-primary-3);
+  padding-top:100px;
+  width: 280px;
+
+  &--collapsed {
+    width:50px;
+
+    .lk-account_toolbar {
+      border: none;
+      .lk-account_toolbar-bar {
+        flex-direction: column;
+        border: none;
+        .lk-account_toolbar-item {
+          width: 100%;
+          border-bottom: 1px solid #aaaaaa;
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+    }
+
+    .lk-workspace-row {
+      display: none;
+
+      &--active {
+        // display: block;
+        // position: relative;
+
+        // .lk-workspace-row--content {
+        //   transform: rotate(-90deg);
+        //   transform-origin: 0 100%;
+        //   position: absolute;
+        //   line-height: 25px;
+        //   font-size: 14px;
+        //   height: 25px;
+        //   width: 100%;
+        //   left: 25px;
+        //   bottom: 0;
+        // }
+
+
+      }
+    }
+  }
+}

@@ -1,22 +1,20 @@
 import { AccessKey } from './AccessKey';
 import { Model } from './Model';
-import { FetchoAPI } from './FetchoAPI';
-import { parse } from 'date-fns';
 
 interface IWorkspace {
-    [key:string]: any; // Add index signature
+    [key: string]: any; // Add index signature
 }
 export interface IWorkspaceProps {
-    id: string;
-    WorkspaceId: string;
-    Name: string;
-    Description: string;
-    QueryText: string;
-    Created: string;
-    IsActive: boolean;
-    IsWellknown: boolean;
-    ResultCount: number;
-    Revision: number;
+    id?: string;
+    WorkspaceId?: string;
+    Name?: string;
+    Description?: string;
+    QueryText?: string;
+    Created?: string;
+    IsActive?: boolean;
+    IsWellknown?: boolean;
+    ResultCount?: number;
+    Revision?: number;
     [propName: string]: any;
 }
 export class Workspace extends Model {
@@ -32,9 +30,9 @@ export class Workspace extends Model {
     public Revision: number;
     [propName: string]: any;
 
-    public AccessKeys : Array<AccessKey>;
+    public AccessKeys: Array<AccessKey>;
 
-    constructor(props : IWorkspaceProps){
+    constructor(props: IWorkspaceProps) {
         super();
         this.id = props.id;
         this.WorkspaceId = props.WorkspaceId;
