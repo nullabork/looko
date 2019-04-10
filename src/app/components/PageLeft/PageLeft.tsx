@@ -14,8 +14,8 @@ interface IPageLeftProps {
 }
 
 let sortWorkspaceOrder = (aAK: AccessKey, bAK: AccessKey) => {
-   let p1 = Permission.canEdit(aAK.Permissions),
-     p2 = Permission.canEdit(bAK.Permissions);
+   let p1 = aAK.IsActive,
+     p2 = bAK.IsActive;
  
    if ( !p1 && p2) {
      return 1;

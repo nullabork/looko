@@ -14,3 +14,5 @@ export { PageLeft } from './PageLeft';
 export { Pagination } from './Pagination';
 export { WorkspaceToolbar } from './WorkspaceToolbar';
 export { AccountToolbar } from './AccountToolbar';
+export { Pagination2 } from './Pagination2';
+export { DropdownInput } from './DropdownInput';

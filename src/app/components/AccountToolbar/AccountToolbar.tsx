@@ -57,8 +57,7 @@ export class AccountToolbar extends React.Component<IAccountToolbarProps, {}> {
 
                         <Icon name={ s.leftMainCollapsed? "arrow-right-circle" : "arrow-left-circle"} className='lk-icon-circle lk-account_toolbar-item' onClick={ () => this.toggleMainLeft(s) }/>
                         <Icon name='plus' className='lk-icon-circle lk-account_toolbar-item' onClick={ () => this.addWorkspace(s) }/>
-                        
-                        {/* <Icon name='nullabork-white-circle' sprite='custom-sprites' className='lk-icon-circle lk-account_toolbar-item' onClick={ () => this.addWorkspace(s) }/> */}
+                        <div className='lk-account_toolbar-item lk-account_toolbar-item--fill'></div>
                      </div>
 
                   </div>

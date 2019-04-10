@@ -1,5 +1,6 @@
-const conf = require('./base.webpack.config');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const conf = require('./base.webpack.config'),
+  MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+  WebpackCleanPlugin = require('webpack-clean-plugin');
 
 conf.module.rules = [
   {
@@ -22,6 +23,10 @@ conf.module.rules = [
 conf.devtool = false;
 
 conf.plugins = [
+  new WebpackCleanPlugin({
+    on: "emit",
+    path: ['./public']
+  }),
   ...conf.plugins,
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output

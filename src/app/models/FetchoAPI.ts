@@ -42,6 +42,12 @@ export interface IGetAccessKey  extends IRequest  {
     AccessKeyID: string;
 }
 
+export interface IDeleteQuery extends IRequest  {
+    AccessKeyID: string;
+    QueryText: string;
+}
+
+
 
 export interface IPatchData {
     [index: string]: any;
@@ -130,12 +136,34 @@ export class FetchoAPI extends Model {
             });
     }
 
+    public static deleteTransform(props : IDeleteQuery) {
+        let endpoint = `${Config.api}/accesskeys`;
+
+        var PutOpts = {
+            method: 'PUT',
+            uri: `${Config.api}/accesskey/${props.AccessKeyID}/results/transform`,
+            body: {
+                Action: "DeleteByQueryText",
+                QueryText : props.QueryText
+            },
+            json: true 
+        };
+
+
+        rp(PutOpts)
+            .then((body : any) => {
+                props.cb(body, "200")
+            });
+    }
+    
+
 
     public static getResults( props : IResults ) {
 
         let params = [
             `offset=${props.resultSet.pager.offset}`,
-            `count=${props.resultSet.pager.count}`
+            `count=${props.resultSet.pager.count}`,
+            `query=${props.resultSet.pager.query}`
         ]
         
         var GetOpts = {
@@ -146,6 +174,10 @@ export class FetchoAPI extends Model {
 
         rp(GetOpts)
             .then((body : any) => {
+                if(body.Results) {
+                    body = body.Results;
+                }
+
                 props.cb(body, "200");
             })
             .catch((err : any) => {

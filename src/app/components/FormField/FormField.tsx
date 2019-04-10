@@ -4,8 +4,9 @@ export interface IFormField {
    name : string;
    id : string;
    className? : string;
+   classNames? : Array<string>;
    value? : string;
-   label : string;
+   label? : string;
    onChange? : { (target:HTMLElement) : void  };
    onClick? : { () : void  };
 }

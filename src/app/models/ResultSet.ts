@@ -26,20 +26,19 @@ import { Config } from '@Config/config'
  * @class Account
  * @extends {Model}
  */
+
+interface IPager {
+    count : number;
+    offset : number;
+    query : string;
+};
 export class ResultSet extends Model {
 
     public results?: Array<any>;
     public accessKey: AccessKey;
     
-    public pager: {
-        count : number;
-        offset : number;
-    };
-
-    public defaultPager: {
-        count : number;
-        offset : number;
-    };
+    public pager: IPager;
+    public defaultPager: IPager;
 
     constructor(accessKey : AccessKey){
         super();
@@ -48,14 +47,25 @@ export class ResultSet extends Model {
 
         this.defaultPager = {
             count : Config.pager.count,
-            offset : Config.pager.offset
+            offset : Config.pager.offset,
+            query : ""
         };
 
         this.pager = {
             count : Config.pager.count,
-            offset : 0
+            offset : 0,
+            query : ""
         };
     }
+
+    setQuery(query : string) {
+        this.pager.query =  encodeURIComponent(query);
+    }
+
+    getQuery() {
+        return decodeURIComponent(this.pager.query);
+    }
+    
 
     fetch(cb : {(): void;}) {
         FetchoAPI.getResults({

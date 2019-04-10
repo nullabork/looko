@@ -5,30 +5,29 @@
 
 }
 
+.lk-pagination {
 
+  border-top: 1px solid #aaaaaa;
 
-.lk-account_toolbar {
-
-  border-bottom: 1px solid #aaaaaa;
-
-  .lk-account_toolbar-menu {
+  .lk-pagination-menu {
     height:0;
     // transition: height 300ms;
     display:none;
     
     &--active {
       display:flex;
-      border-top: 1px solid #aaaaaa;
+      border-bottom: 1px solid #aaaaaa;
       height:auto;
     }
   }
 
-  .lk-account_toolbar-bar {
+  .lk-pagination-bar {
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
     
-    .lk-account_toolbar-item {
+    .lk-pagination-item { 
       max-width: 45px;
       cursor: pointer;
       height: 45px;
@@ -61,19 +60,3 @@
     }
   }
 } 
-
-
-.lk-pageleft{
-  &--collapsed {
-
-    .lk-account_toolbar {
-      .lk-account_toolbar-bar {      
-        .lk-account_toolbar-item {
-          border:none;
-        }
-      }
-    }
-
-  }
-}
- 

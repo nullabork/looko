@@ -22,12 +22,6 @@ export class Pagination extends React.Component<IPaginationProps, {}> {
     }
   }
 
-  selectWorkspace(context: AccountContextInterface, selectedAccessKey: AccessKey) {
-    // if(!selectedAccessKey.ResultSet.results.length){
-
-    // }
-  }
-
   maxOut(context: AccountContextInterface): void {
     this.props.selectedAccessKey.ResultSet.max().fetch(() => {
       context.set((state) => {
@@ -42,9 +36,10 @@ export class Pagination extends React.Component<IPaginationProps, {}> {
   plusOne(context: AccountContextInterface): void {
     this.props.selectedAccessKey.ResultSet.next().fetch(() => {
       context.set((state) => {
+        let a = 'asd';
          return {
             ...state,
-            selectedAccessKey : this.props.selectedAccessKey
+            [a] : this.props.selectedAccessKey
          }
       })
     });

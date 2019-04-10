@@ -1,5 +1,5 @@
-import { Page, PageLeft, Pagination, ResultDetails, ResultRow, Results, WorkspaceDetails, WorkspaceToolbar } from '@Components/index';
-import { AccountContextConsumer } from '@Context/AccountContext';
+import { Page, PageLeft, Pagination2, ResultDetails, ResultRow, Results, WorkspaceDetails, WorkspaceToolbar } from '@Components/index';
+import { AccountContextConsumer, AccountContextInterface } from '@Context/AccountContext';
 import { AccessKey, IResult, Types, Permission } from '@Models/index';
 import * as React from 'react';
 
@@ -11,19 +11,6 @@ interface DashboardViewProps {
   onNewAccessKey?: { (): void; };
   onResultSelect?: { (result: IResult): void; };
   //wsChangeProperty : {(name :string, value : any) : void}
-}
-
-let sortWorkspaceOrder = (aAK: AccessKey, bAK: AccessKey) => {
-  let p1 = Permission.canEdit(aAK.Permissions),
-    p2 = Permission.canEdit(bAK.Permissions);
-
-  if ( p1 && !p2) {
-    return 1;
-  } else if(!p1 && p2) {
-    return -1;
-  }
-  
-  return bAK.getCreateDate().getTime() - aAK.getCreateDate().getTime()
 }
 
 
@@ -48,12 +35,15 @@ export const DashboardView = (props: DashboardViewProps) => (
                     result={rw}
                     selectedWorkspace={s.selectedResult && s.selectedResult.UriHash == rw.UriHash}
                     onSelect={props.onResultSelect} />
-                })
+                  })
 
                 : null}
             </Results>
 
-            <Pagination selectedAccessKey={s.selectedAccessKey} />
+            <Pagination2 
+              resultSet={s.selectedAccessKey.ResultSet}
+              resultCount={s.selectedAccessKey.Workspace.ResultCount}
+              update={() => { s.set( (state : AccountContextInterface ) => state ) }} />
 
           </div>
         : null}

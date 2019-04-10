@@ -108,7 +108,7 @@ export class AccessKey extends Model {
     }
 
 
-    public PatchWorkspace(patchData: IPatchData ,cb : {(accessKey: AccessKey): void;}) {
+    public PatchWorkspace(patchData: IPatchData, cb : {(accessKey: AccessKey): void;}) {
         FetchoAPI.patchWorkspace(
             this.Id,
             {
