@@ -5,6 +5,7 @@ import { Config } from '@Config/config';
 import { AccessKey } from './AccessKey';
 import { Account } from './Account';
 import { ResultSet } from './ResultSet';
+import { QueryActions } from './Transforms.enum';
 
 export interface IWorkspacesProps {
     accessKey? : string;
@@ -45,6 +46,13 @@ export interface IGetAccessKey  extends IRequest  {
 export interface IDeleteQuery extends IRequest  {
     AccessKeyID: string;
     QueryText: string;
+}
+
+export interface ITransformByQuery extends IRequest  {
+    AccessKeyID: string;
+    Action: string;
+    QueryText: string;
+    Tag: string;
 }
 
 
@@ -136,15 +144,37 @@ export class FetchoAPI extends Model {
             });
     }
 
-    public static deleteTransform(props : IDeleteQuery) {
+    // public static deleteTransform(props : IDeleteQuery) {
+    //     let endpoint = `${Config.api}/accesskeys`;
+
+    //     var PutOpts = {
+    //         method: 'PUT',
+    //         uri: `${Config.api}/accesskey/${props.AccessKeyID}/results/transform`,
+    //         body: {
+    //             Action: "DeleteByQueryText",
+    //             QueryText : props.QueryText
+    //         },
+    //         json: true 
+    //     };
+
+
+    //     rp(PutOpts)
+    //         .then((body : any) => {
+    //             props.cb(body, "200")
+    //         });
+    // }
+
+
+    public static queryTransform(props : ITransformByQuery) {
         let endpoint = `${Config.api}/accesskeys`;
 
         var PutOpts = {
             method: 'PUT',
             uri: `${Config.api}/accesskey/${props.AccessKeyID}/results/transform`,
             body: {
-                Action: "DeleteByQueryText",
-                QueryText : props.QueryText
+                Action: props.Action,
+                QueryText : props.QueryText,
+                Tag : props.Tag
             },
             json: true 
         };

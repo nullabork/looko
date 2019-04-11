@@ -22,7 +22,7 @@ export const DropdownInput = (props: IDropdownInputProps) => (
          onChange={(e) => props.onChange && props.onChange(e.target) }>
          {
             props.items.map((optionData : IOption, index: number) => {
-               return <option key={index + optionData.label + optionData.value}  {...optionData}>{optionData.label}</option>
+               return <option key={index + optionData.label + optionData.value} selected={optionData.selected} {...optionData}>{optionData.label}</option>
             })
          }
       </select>

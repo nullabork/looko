@@ -33,6 +33,20 @@
     .lk-workspace_toolbar--search-bar {
       display:flex;
       flex-direction: row;
+
+      &:first-child {
+        border: none;
+      }
+      .lk-dropdown, .lk-input {
+        padding: 0;
+        margin: 0;
+        select, input {
+           height: 100%;
+        }
+    
+      }
+
+
     }
 
     .lk-result-query {
@@ -86,9 +100,7 @@
   }
 
 
-  &:first-child {
-    border: none;
-  }
+
 }
 
 

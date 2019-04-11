@@ -6,8 +6,8 @@ import {
 } from '@Context/AccountContext';
 
 import { Config } from '@Config/config'
-import { AccessKey,Types, FetchoAPI } from '@Models/index';
-import { Icon, NumberInput, DropdownInput } from '@Components/index';
+import { AccessKey,Types, FetchoAPI, QueryActions } from '@Models/index';
+import { Icon, NumberInput, DropdownInput,TextInput } from '@Components/index';
 
 import './sass/_workspace_toolbar.scss';
 import { TextareaInput } from '@Components/TextareaInput';
@@ -21,6 +21,8 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
    state: {
       menu : boolean;
       search : boolean;
+      action : string;
+      tag : string;
       query : string;
    }
 
@@ -29,6 +31,8 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
       this.state = {
          menu : false,
          search : false,
+         tag : "",
+         action : QueryActions.None,
          query : props.selectedAccessKey.ResultSet.pager.query
       }
    }
@@ -99,9 +103,11 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
    }
 
    deleteHack(context: AccountContextInterface) {
-      FetchoAPI.deleteTransform({
+      FetchoAPI.queryTransform({
          AccessKeyID : context.selectedAccessKey.Id,
+         Action : this.state.action,
          QueryText : this.state.query,
+         Tag : this.state.tag,
          cb : () => {
             console.log('done transform');
          }
@@ -160,17 +166,43 @@ export class WorkspaceToolbar extends React.Component<IWorkspaceToolbarProps, {}
                            <div className='lk-toolbar-item lk-toolbar-item--field'>
 
                            </div>
+
+                           {
+                              this.state.action == QueryActions.TagByQueryText 
+                              || this.state.action == QueryActions.UntagByQueryText ?
+
+                              <TextInput
+                                 name="Tag"
+                                 id={"tag"}
+                                 value={ this.state.tag }
+                                 onChange={(target: HTMLInputElement) => {
+                                    
+                                    this.setState({
+                                       tag : target.value
+                                    })
+
+                                 }} /> : null
+                           }
+
                            <DropdownInput 
                               id='action'
                               name='Action'
-                              value="select"
-                              items={[
-                                 {
-                                    label : "asdasd",
-                                    value : "asdasd",
-                                    selected : false
-                                 }
-                              ]} />
+                              value={this.state.action}
+                              onChange={ (e:HTMLInputElement) => {
+         
+                                 this.setState({
+                                    action : e.value
+                                 })
+                              }}
+                              items={
+                                 Object.keys(QueryActions).map( (key:any) => {
+                                    return {
+                                       label : QueryActions[key],
+                                       value : key,
+                                       selected :  this.state.action == key
+                                    }
+                                 })
+                              } />
                            <Icon name='star' className='lk-toolbar-item' onClick={() => { this.deleteHack(s) }}/>
 
                         </div>

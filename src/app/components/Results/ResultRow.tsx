@@ -2,7 +2,7 @@ import React, { Component, ReactNode } from 'react';
 import { string } from 'prop-types';
 import domain from 'getdomain';
 import { IResult } from '@Models/ResultSet';
-import { Icon } from '@Components/Icon';
+import { Icon, Tags } from '@Components/index';
 import './sass/_result.scss';
 
 export interface IResultProps {
@@ -27,6 +27,8 @@ export const ResultRow = (props: IResultProps) => (
          <div className="text-muted lk-result-description">
             { props.result.Description }
          </div>
+
+         <Tags items={props.result.Tags} />
          
       </div>
    </div>     

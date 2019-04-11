@@ -13,7 +13,7 @@ import { Config } from '@Config/config'
     Uri: string;
     Title: string;
     Description: string;
-    Tags: any,
+    Tags: Array<string>,
     Created: string;
     PageSize: string;
     Sequence: number;
