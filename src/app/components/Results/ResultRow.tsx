@@ -17,7 +17,7 @@ export const ResultRow = (props: IResultProps) => (
       <div className="">
          
          <div className="text-truncate text-primary lk-result-wrapper">
-            <a target="_blank" href={props.result.Uri}>{props.result.Title.length == 0 ? '(no title)' : props.result.Title }</a>
+            <a target="_blank" href={props.result.Uri}>{props.result.Title.length == 0 ? props.result.Uri : props.result.Title }</a>
             <br/>
             <small className="text-muted">
                { domain.get(props.result.Uri) }
